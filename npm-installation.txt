@@ -1,0 +1,94 @@
+#! /bin/sh
+
+pwd
+ls
+
+Setup Angular Front-End:
+
+ng new project-frontend
+cd project-frontend
+npm update
+npm install --save-dev --save-exact prettier tslint-config-prettier
+touch .prettierrc.json
+/* Add this to your '.prettierrc.json': */
+{
+    "printWidth": 120,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": false,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "requirePragma": false,
+    "proseWrap": "preserve",
+    "arrowParens": "always"
+}
+
+// End of .prettierrc.json
+
+touch .prettierignore
+/* Add this to your '.prettierignore': */
+node_modules/
+dist/
+build/
+
+// End of .prettierignore
+
+touch tslint.json
+/* Add this to your 'tslint.json': */
+{
+    "extends": ["tslint:recommended", "tslint-config-prettier"]
+}
+
+// End of tslint.json
+
+Setup Node.js / Express.js Backend (with TypeScript):
+
+mkdir project-backend
+cd project-backend
+npm init -y
+mkdir src/
+npm install typescript ts-node --save-dev
+npm install --save-dev --save-exact prettier tslint-config-prettier
+npm install --save-dev express body-parser @types/express 
+npm install --save-dev ts-node-dev @types/node
+
+/* Add this to your 'tsconfig.json': */
+{
+    "compilerOptions": {
+        "strict": true,
+        "module": "NodeNext",
+        "target": "ESNext",
+        "sourceMap": true,
+        "outDir": "dist",
+        "esModuleInterop": true,
+        "skipLibCheck": true
+    },
+    "include": ["src/**/*"]
+}
+
+// End of tsconfig.json
+
+npm install --save-dev --save-exact prettier tslint-config-prettier
+ouch .prettierrc.json
+/* Add this to your '.prettierrc.json': */
+{
+    "printWidth": 120,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": false,
+    "trailingComma": "none",
+    "bracketSpacing": true,
+    "requirePragma": false,
+    "proseWrap": "preserve",
+    "arrowParens": "always"
+}
+
+// End of .prettierrc.json
+
+touch .prettierignore
+/* Add this to your '.prettierignore': */
+node_modules/
+
+// End of .prettierignore
