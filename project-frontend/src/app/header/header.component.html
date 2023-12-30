@@ -1,0 +1,21 @@
+<p>header works!</p>
+<button (click)="incrementCounter()">Increment</button>
+<button (click)="decrementCounter()">Decrement</button>
+<button (click)="setStaticDefaultCounter()">Reset Default</button>
+<p>Counter is {{ this.counter() }}</p>
+<p>Counter + 10 (Computed) is {{ this.computedVal() }}</p>
+<div>
+    @for (number of this.numbers(); track number.id) {
+        <h3>{{ number.fName }}</h3>
+        @if (number.fName === "Andrew") {
+            <p>GOT ANDREW!</p>
+        }
+        @else if (number.id === 2) {
+            <p>GOT ANDERSON!</p>
+        }
+        @else {
+            <p>DID NOT GET EITHER!</p>
+        }
+    }
+    @empty { <p>NO USERS FOUND!</p> }
+</div>
