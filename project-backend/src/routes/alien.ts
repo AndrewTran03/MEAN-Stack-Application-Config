@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express";
-// import { Alien } from "../../assets/types";
 import { AlienModel, AlienSchema } from "../models/alien";
 import log from "../utils/logger";
 

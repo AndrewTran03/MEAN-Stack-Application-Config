@@ -8,6 +8,6 @@ router.get("/api/example", (req: Request, res: Response) => {
 
 router.post("/api/example", (req: Request, res: Response) => {
     return res.status(201).send({ data: "NEW example created!\r\n" });
-});
+}); 
 
 export { router as exampleRouter };
