@@ -94,5 +94,5 @@ node_modules/
 // End of .prettierignore
 
 Install Extra Dependencies:
-npm install --save-dev @types/config pino-pretty @types/cors @types/mongodb @types/cors @types/mongoose @typegoose/typegoose 
+npm install --save-dev @types/config pino-pretty @types/cors @types/mongodb @types/cors @types/mongoose @typegoose/typegoose @types/dotenv
 npm install --save-dev mongoose config argon2 pino dayjs dotenv mongodb cors
