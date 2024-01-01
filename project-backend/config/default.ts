@@ -3,5 +3,5 @@
 export default { 
     port: 3000,
     logLevel: "info",
-    mongoDatabaseUri: `mongodb+srv://admin:${process.env.PASSWORD}@practice-mean-app.mzbvva2.mongodb.net/Aliens?retryWrites=true&w=majority`
+    mongoDatabaseUri: `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.DATABASE}.mzbvva2.mongodb.net/${process.env.ALIEN_COLLECTION}?retryWrites=true&w=majority`
 };
