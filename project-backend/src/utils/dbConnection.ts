@@ -6,7 +6,6 @@ async function ensureConnectionToMongoDatabase() {
     const dbUri = config.get<string>("alienMongoDatabaseUri");
 
     try {
-        log.info(dbUri);
         await mongoose.connect(dbUri);
         log.info("Sucessfully initiated connection to MongoDB");
     } catch (e) {
