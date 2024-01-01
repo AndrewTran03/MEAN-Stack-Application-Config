@@ -1,5 +1,5 @@
-import express, { Request, Response } from "express";
-import { AlienModel, AlienSchema } from "../models/alien";
+import express from "express";
+import { AlienModel } from "../models/alien";
 import log from "../utils/logger";
 import { Alien } from "../../assets/types";
 
