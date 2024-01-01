@@ -1,9 +1,10 @@
+// Shared Typescript Types/Interfaces/Other Global-Variables Used Throughout the Project:
 
-// Shared Typescript Types Used Throughout the Project:
-
-export type Alien = {
+type Alien = {
     name: string,
     tech: string,
     age: number,
     sub: boolean
 };
+
+export { Alien };
