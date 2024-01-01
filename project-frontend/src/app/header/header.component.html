@@ -19,3 +19,11 @@
     }
     @empty { <p>NO USERS FOUND!</p> }
 </div>
+<div>
+    @for (alien of this.aliens(); track alien._id) {
+        <h3>ID: {{ alien._id }}</h3>
+        <p>ALIEN OBJECT:</p>
+        <p>{{ alien.name }} {{ alien.age }} {{ alien.tech }} {{ alien.sub }}</p>
+    }
+    @empty { <p>NO ALIENS FOUND!</p> }
+</div>
