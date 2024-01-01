@@ -5,6 +5,23 @@ type Prettify<T> = {
     [K in keyof T]: T[K];
 } & {};
 
+enum HTTP_REQUEST_METHODS {
+    GET = "GET",
+    POST = "POST",
+    PUT = "PUT",
+    PATCH = "PATCH",
+    DELETE = "DELETE",
+    HEAD = "HEAD",
+    OPTIONS = "OPTIONS",
+    DEFAULT_DOES_NOT_WORK = "DEFAULT_DOES_NOT_WORK"
+}
+
+enum BACKEND_API_ENDPOINTS {
+    ALIENS = "/api/alien"
+}
+
+const backendUrlBase = "http://localhost:3000";
+
 // Example
 type Generic_User = {
     id: number;
@@ -17,7 +34,12 @@ type MongoDBEntry = {
     __v: number; // Version Number (Auto-Increments - Avoiding Duplicate Entry-Modification)
 };
 
-const aliensBackendUrlBase = "http://localhost:3000/api/alien";
+// Required for CRUD Operations with the fetch() API:
+type JsonRequestConfig = {
+    method: keyof typeof HTTP_REQUEST_METHODS;
+    headers?: Record<string, string>;
+    body?: string;
+};
 
 type Alien = Prettify<
     MongoDBEntry & {
@@ -28,14 +50,4 @@ type Alien = Prettify<
     }
 >;
 
-enum HTTP_REQUEST_METHODS {
-    GET,
-    POST,
-    PUT,
-    DELETE,
-    PATCH,
-    OPTIONS,
-    HEAD
-}
-
-export { Generic_User, Alien, aliensBackendUrlBase, HTTP_REQUEST_METHODS };
+export { Generic_User, HTTP_REQUEST_METHODS, BACKEND_API_ENDPOINTS, backendUrlBase, Alien, JsonRequestConfig };
