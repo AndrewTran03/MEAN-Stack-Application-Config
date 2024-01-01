@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import express, { Response } from "express";
+import express, { NextFunction } from "express";
 import bodyParser from "body-parser";
 import config from "config";
 import cors from "cors";
@@ -15,14 +15,17 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({ credentials: true }));
 app.use(router);
-app.use((_, res) => {
+app.use((_, res, next: NextFunction) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 const port = config.get<number>("port");
+const backendUrl = config.get<number>("backendUrl");
 
 app.listen(port, async () => {
-    log.info(`App started on http://localhost:${port}`);
+    log.info(`App started on ${backendUrl}`);
     await ensureConnectionToMongoDatabase();
 });

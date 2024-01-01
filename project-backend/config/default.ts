@@ -1,7 +1,10 @@
 
 // Necessary Back-End Configuration Properties (using NPM "config")
-export default { 
-    port: 3000,
+export default {
+    port: `${process.env.PORT}`,
+    backendUrl: `http://localhost:${process.env.PORT}`,
     logLevel: "info",
-    mongoDatabaseUri: `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.DATABASE}.mzbvva2.mongodb.net/${process.env.ALIEN_COLLECTION}?retryWrites=true&w=majority`
+    alienMongoDatabaseUri: `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.ALIEN_DB_NAME}.mzbvva2.mongodb.net/${process.env.ALIEN_COLLECTION_NAME}?retryWrites=true&w=majority`,
+    alienMongoDatabaseName: `${process.env.ALIEN_DB_NAME}`,
+    alienMongoCollectionName: `${process.env.ALIEN_COLLECTION_NAME}`
 };

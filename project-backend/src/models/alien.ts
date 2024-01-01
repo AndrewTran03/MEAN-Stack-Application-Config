@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import config from "config";
 import { Alien } from "../../assets/types";
 
 const AlienSchema = new mongoose.Schema<Alien>({
@@ -21,6 +22,9 @@ const AlienSchema = new mongoose.Schema<Alien>({
     }
 });
 
-const AlienModel = mongoose.model("Aliens", AlienSchema, "Aliens");
+const alienMongoDBName = config.get<string>("alienMongoDatabaseName");
+const alienMongoCollectionName = config.get<string>("alienMongoCollectionName");
+
+const AlienModel = mongoose.model(alienMongoDBName, AlienSchema, alienMongoCollectionName);
 
 export { AlienSchema, AlienModel };
