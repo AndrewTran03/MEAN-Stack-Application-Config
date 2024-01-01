@@ -8,7 +8,7 @@ const log: Logger = logger({
     level: level,
     transport: { target: "pino-pretty" },
     base: { pid: false },
-    timestamp: () => `,"time":"${dayjs().format()}"`
+    timestamp: () => `, "time":"${dayjs().format()}"`
 });
 
 export default log;
