@@ -4,10 +4,7 @@ import { Alien } from "../../assets/types";
 const AlienSchema = new mongoose.Schema<Alien>({
     name: {
         type: String,
-        required: true,
-        unique: true,
-        index: true,
-        dropDups: true
+        required: true
     },
     tech: {
         type: String,
