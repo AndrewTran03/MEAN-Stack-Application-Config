@@ -1,6 +1,7 @@
+# !/bin/bash
 
 echo "|-------- Beginning of Running Front-End Script --------|"
-echo "Installing npm Dependencies"
+echo "Installing NPM Dependencies"
 time npm install
 echo "Running Angular Frontend:"
 npm run start
