@@ -45,10 +45,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.getAlienData();
         if (this.refreshInterval) {
             clearInterval(this.refreshInterval);
-            this.refreshInterval = setInterval(() => {
-                this.getAlienData();
-            }, this.MAX_TIMER_INTERVAL);
         }
+        this.refreshInterval = setInterval(() => {
+            this.getAlienData();
+        }, this.MAX_TIMER_INTERVAL);
     }
 
     incrementCounter() {
