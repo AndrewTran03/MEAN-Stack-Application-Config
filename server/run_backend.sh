@@ -1,7 +1,7 @@
 # !/bin/bash
 
 echo "|-------- Beginning of Running Back-End Script --------|"
-echo "Installing NPM JS Dependencies:"
+echo "Installing NPM Dependencies:"
 time npm install
 echo "Running JavaScript MongoDB/Express.js/Node.js Backend (with TypeScript):"
 npm run format
