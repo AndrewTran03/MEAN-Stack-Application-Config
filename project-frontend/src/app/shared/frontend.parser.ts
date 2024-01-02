@@ -1,4 +1,4 @@
-import { Alien } from "./models";
+import { Alien } from "./types";
 
 function parseAlienEntries(alienTableData: any[]): Alien[] {
     const alienEntries: Alien[] = [];

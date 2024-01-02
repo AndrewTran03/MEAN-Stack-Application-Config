@@ -1,5 +1,5 @@
 import { Component, computed, effect, signal, OnInit, OnDestroy } from "@angular/core";
-import { Generic_User, Alien } from "../shared/models";
+import { Generic_User, Alien } from "../shared/types";
 import { AlienService } from "../services/alien.service";
 
 @Component({
