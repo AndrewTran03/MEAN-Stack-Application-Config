@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { JsonRequestConfig, backendUrlBase, BACKEND_API_ENDPOINTS } from "../shared/types";
 import { Alien, HTTP_REQUEST_METHODS } from "../shared/types";
-import { parseAlienEntries } from "../shared/frontend.parser";
+import { FrontendParser } from "../shared/frontend.parser";
 
 // Reference: https://jasonwatmore.com/post/2021/09/21/fetch-http-delete-request-examples
 @Injectable({
@@ -25,7 +25,7 @@ export class AlienService {
         // TODO: Update with better error-handling logic
         return await fetch(this.aliensMongoDBURL, this.jsonRequest)
             .then((res) => res.json())
-            .then(parseAlienEntries);
+            .then(FrontendParser.parseAlienEntries);
     }
 
     async insertAlien(alienToInsert: Alien) {
