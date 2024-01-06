@@ -22,7 +22,7 @@ enum BACKEND_API_ENDPOINTS {
 
 const backendUrlBase = "http://localhost:3000";
 
-// Example
+// Example Type
 type Generic_User = {
     id: number;
     fName: string;
