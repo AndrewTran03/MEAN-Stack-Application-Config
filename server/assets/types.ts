@@ -18,8 +18,4 @@ type UserAuth = {
     user_level: string
 }
 
-type Unified = Prettify<Alien & UserAuth & {
-    id: number
-}>;
-
 export { Alien, UserAuth };
