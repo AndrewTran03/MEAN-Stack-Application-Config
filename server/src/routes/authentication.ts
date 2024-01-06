@@ -28,7 +28,6 @@ const newObj: UserSchema = {
     user_level: USER_LEVEL.ADMIN
 };
 
-
 const schemaVerifyResult = schema.safeParse(newObj);
 console.log(schemaVerifyResult);
 
@@ -124,7 +123,7 @@ async function deleteUser(deleteUserId: number) {
     return true;
 }
 
-async function updateUser (updateUserId: number, updateFields: UserAuth) {
+async function updateUser(updateUserId: number, updateFields: UserAuth) {
     const sqlDatabase = openSQLDatabase();
 
     const updateQuery = `UPDATE AUTHENTICATION SET username = (?), password = (?), user_level = (?) WHERE id = (?)`;

@@ -6,16 +6,16 @@ type Prettify<T> = {
 } & {};
 
 type Alien = {
-    name: string,
-    tech: string,
-    age: number,
-    sub: boolean
+    name: string;
+    tech: string;
+    age: number;
+    sub: boolean;
 };
 
 type UserAuth = {
-    username: string,
-    password: string,
-    user_level: string
-}
+    username: string;
+    password: string;
+    user_level: string;
+};
 
 export { Alien, UserAuth };
