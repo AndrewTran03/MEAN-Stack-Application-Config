@@ -1,5 +1,10 @@
 // Shared Typescript Types/Interfaces/Other Global-Variables Used Throughout the Project:
 
+// Reference: https://www.totaltypescript.com/concepts/the-prettify-helper
+type Prettify<T> = {
+    [K in keyof T]: T[K];
+} & {};
+
 type Alien = {
     name: string,
     tech: string,
@@ -12,5 +17,9 @@ type UserAuth = {
     password: string,
     user_level: string
 }
+
+type Unified = Prettify<Alien & UserAuth & {
+    id: number
+}>;
 
 export { Alien, UserAuth };
