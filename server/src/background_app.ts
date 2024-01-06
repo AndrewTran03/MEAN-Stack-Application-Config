@@ -7,7 +7,10 @@ import config from "config";
 import cors from "cors";
 import log from "./utils/logger";
 import router from "./routes";
-import { ensureConnectionToMongoDatabase } from "./utils/dbConnection";
+import { Server } from "socket.io";
+import http from "http";
+import { ensureConnectionToMongoDatabase } from "./utils/mongoConnection";
+import { ensureConnectionToSQLDatabase } from "./utils/sqlConnection";
 
 // Link: https://medium.com/swlh/typescript-with-mongoose-and-node-express-24073d51d2eed
 const app = express();
@@ -22,10 +25,32 @@ app.use((_, res, next: NextFunction) => {
     next();
 });
 
-const port = config.get<number>("port");
-const backendUrl = config.get<number>("backendUrl");
+// const frontendClientPort = config.get<number>("frontendClientPort");
+const frontendClientUrl = config.get<string>("frontendClientUrl");
 
-app.listen(port, async () => {
-    log.info(`App started on ${backendUrl}`);
+// Socket.io Setup (Server):
+const server = http.createServer(app);
+const ioSocket = new Server(server, {
+    cors: {
+        origin: [frontendClientUrl],
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"]
+    }
+});
+
+// Tracks incoming connections to SocketIO server connection
+ioSocket.on("connection", (socket) => {
+    log.debug(`User sucessfully connected to Socket.io!\nSERVER-SIDE #ID: ${socket.id}`);
+
+    socket.conn.on("close", (reason) => {
+        log.debug(`A user disconnected. REASON: ${reason}`);
+    });
+});
+
+const backendServerPort = config.get<number>("backendServerPort");
+const backendServerUrl = config.get<string>("backendServerUrl");
+
+server.listen(backendServerPort, async () => {
+    log.debug(`App started on ${backendServerUrl}`);
     await ensureConnectionToMongoDatabase();
+    await ensureConnectionToSQLDatabase();
 });
