@@ -1,7 +1,4 @@
-#! /bin/sh
-
-pwd
-ls
+#! /bin/bash
 
 Setup Angular Front-End:
 
@@ -41,6 +38,10 @@ touch tslint.json
 }
 
 // End of tslint.json
+
+Install Extra Dependencies:
+
+npm install --save-dev axios zod zod-validation-error socket.io-client sqlite3 @types/sqlite3
 
 Setup Node.js / Express.js Backend (with TypeScript):
 
@@ -95,4 +96,4 @@ node_modules/
 
 Install Extra Dependencies:
 npm install --save-dev @types/config pino-pretty @types/cors @types/mongodb @types/cors @types/mongoose @typegoose/typegoose @types/dotenv
-npm install --save-dev mongoose config argon2 pino dayjs dotenv mongodb cors
+npm install --save-dev mongoose config argon2 pino dayjs dotenv mongodb cors zod zod-validation-error socket.io
