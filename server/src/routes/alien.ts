@@ -17,7 +17,6 @@ router.get("/api/alien", async (_, res) => {
             log.info(item);
         });
 
-        log.info("Successfully found at least one alien!");
         log.info(`END OF GET REQUEST #${index} ------------------------`);
         index++;
         return res.status(200).json(currItems);
