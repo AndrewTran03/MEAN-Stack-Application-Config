@@ -7,4 +7,10 @@ type Alien = {
     sub: boolean
 };
 
-export { Alien };
+type UserAuth = {
+    username: string,
+    password: string,
+    user_level: string
+}
+
+export { Alien, UserAuth };
