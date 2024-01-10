@@ -1,30 +1,34 @@
 import mongoose from "mongoose";
 import config from "config";
 import log from "./logger";
+import { MongoClient } from "mongodb";
 
 async function ensureConnectionToMongoDatabase() {
-    const dbUri = config.get<string>("alienMongoDatabaseUri");
+    const dbUri = config.get<string>("mongoDatabaseUri");
 
     try {
         log.info(dbUri);
-        await mongoose.connect(dbUri);
+        await mongoose.connect(dbUri, { useNewUrlParser: true });
         log.info("Sucessfully initiated connection to MongoDB");
     } catch (e) {
         log.error("Failed to connect to MongoDB. Exiting now...");
         process.exit(1);
     }
 
-    // let client: MongoClient;
+    return true;
+
+    // OLD WAY:
+    // const client = new MongoClient(dbUri);
     // try {
-    //     client = new MongoClient(dbUri);
-    //     log.debug("Succesfully initated connnection to MongoDB");
+    //     log.info(dbUri);
+    //     await client.connect();
+    //     log.info("Sucessfully initiated connection to MongoDB");
     // } catch (e) {
-    //     log.warn("Failed to connect to MongoDB. Exiting now...");
+    //     log.error("Failed to connect to MongoDB. Exiting now...");
     //     process.exit(1);
     // }
 
-    // return client;
-    return true;
+    // return client.db();
 }
 
 export { ensureConnectionToMongoDatabase };

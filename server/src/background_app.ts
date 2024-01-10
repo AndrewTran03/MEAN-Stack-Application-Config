@@ -11,6 +11,7 @@ import { Server } from "socket.io";
 import http from "http";
 import { ensureConnectionToMongoDatabase } from "./utils/mongoConnection";
 import { ensureConnectionToSQLDatabase } from "./utils/sqlConnection";
+import { Db } from "mongodb";
 
 // Link: https://medium.com/swlh/typescript-with-mongoose-and-node-express-24073d51d2eed
 const app = express();
@@ -49,8 +50,16 @@ ioSocket.on("connection", (socket) => {
 const backendServerPort = config.get<number>("backendServerPort");
 const backendServerUrl = config.get<string>("backendServerUrl");
 
+// let mongoDbRef: Db;
+
 server.listen(backendServerPort, async () => {
     log.debug(`App started on ${backendServerUrl}`);
     await ensureConnectionToMongoDatabase();
+    // await ensureConnectionToMongoDatabase().then((dbRef) => {
+    //     console.assert(!dbRef);
+    //     mongoDbRef = dbRef;
+    // });
     await ensureConnectionToSQLDatabase();
 });
+
+// export { mongoDbRef };
