@@ -23,16 +23,20 @@ enum BACKEND_API_ENDPOINTS {
 const backendUrlBase = "http://localhost:3000";
 
 // Example Type
-type Generic_User = {
+type GenericUser = {
     id: number;
     fName: string;
 };
 
 // Required with All MongoDB Entries:
 type MongoDBEntry = {
-    _id: string; // Primary Key (IDentifier)
-    __v: number; // Version Number (Auto-Increments - Avoiding Duplicate Entry-Modification)
+    readonly _id: string; // Primary Key (IDentifier)
+    readonly __v: number; // Version Number (Auto-Increments - Avoiding Duplicate Entry-Modification)
+    readonly createdDate: string;
+    readonly updatedDate: string;
 };
+
+type MongoDBCombined<T> = Prettify<MongoDBEntry & T>;
 
 // Required for CRUD Operations with the fetch() API:
 type JsonRequestConfig = {
@@ -41,13 +45,23 @@ type JsonRequestConfig = {
     body?: string;
 };
 
-type Alien = Prettify<
-    MongoDBEntry & {
-        name: string;
-        tech: string;
-        age: number;
-        sub: boolean;
-    }
->;
+type AlienBase = {
+    name: string;
+    tech: string;
+    age: number;
+    sub: boolean;
+};
 
-export { Generic_User, HTTP_REQUEST_METHODS, BACKEND_API_ENDPOINTS, backendUrlBase, Alien, JsonRequestConfig };
+type Alien = MongoDBCombined<AlienBase>;
+
+export {
+    Prettify,
+    GenericUser,
+    HTTP_REQUEST_METHODS,
+    BACKEND_API_ENDPOINTS,
+    backendUrlBase,
+    MongoDBEntry,
+    Alien,
+    AlienBase,
+    JsonRequestConfig
+};
