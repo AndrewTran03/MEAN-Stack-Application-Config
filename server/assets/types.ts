@@ -18,4 +18,11 @@ type UserAuth = {
     user_level: string;
 };
 
-export { Alien, UserAuth };
+type Human = {
+    name: string;
+    personality: string;
+    age: number;
+    isACitizen: boolean;
+};
+
+export { Alien, UserAuth, Human };
