@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { JsonRequestConfig, backendUrlBase, BACKEND_API_ENDPOINTS } from "../shared/types";
+import { JsonRequestConfig, backendUrlBase, BACKEND_API_ENDPOINTS, AlienBase } from "../shared/types";
 import { Alien, HTTP_REQUEST_METHODS } from "../shared/types";
 import { FrontendParser } from "../shared/frontend.parser";
 import { Axios } from "axios";
 
 // Reference: https://jasonwatmore.com/post/2021/09/21/fetch-http-delete-request-examples
 @Injectable({
-    providedIn: "root",
+    providedIn: "root"
 })
 export class AlienService {
     readonly aliensMongoDBURL = `${backendUrlBase}${BACKEND_API_ENDPOINTS.ALIENS}`;
@@ -32,7 +32,7 @@ export class AlienService {
             .then(FrontendParser.parseAlienEntries);
     }
 
-    async insertAlien(alienToInsert: Alien) {
+    async insertAlien(alienToInsert: AlienBase) {
         this.jsonRequest.method = HTTP_REQUEST_METHODS.POST;
         this.jsonRequest.headers = { "Content-Type": "application/json" };
         this.jsonRequest.body = JSON.stringify(alienToInsert);
