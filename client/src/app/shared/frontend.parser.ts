@@ -11,6 +11,8 @@ export class FrontendParser {
             const sub = data.sub as boolean;
             const mongo_db_id = data._id as string;
             const mongo_v = data.__v as number;
+            const mongo_createdDate = data.createdDate as string;
+            const mongo_updatedDate = data.updatedDate as string;
 
             const currAlien: Alien = {
                 name: name,
@@ -18,7 +20,9 @@ export class FrontendParser {
                 age: age,
                 sub: sub,
                 _id: mongo_db_id,
-                __v: mongo_v
+                __v: mongo_v,
+                createdDate: mongo_createdDate,
+                updatedDate: mongo_updatedDate
             };
 
             alienEntries.push(currAlien);
