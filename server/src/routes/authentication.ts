@@ -14,22 +14,23 @@ enum USER_LEVEL {
     OTHER = "reg_user"
 }
 
-const schema = z.object({
-    username: z.string(),
-    password: z.string(),
-    user_level: z.enum(["admin", "owner", "employee", "customer", "reg_user"])
-});
+// Test Code for Schema Validation
+// const schema = z.object({
+//     username: z.string(),
+//     password: z.string(),
+//     user_level: z.enum(["admin", "owner", "employee", "customer", "reg_user"])
+// });
 
-type UserSchema = z.infer<typeof schema>;
+// type UserSchema = z.infer<typeof schema>;
 
-const newObj: UserSchema = {
-    username: "user",
-    password: "pass",
-    user_level: USER_LEVEL.ADMIN
-};
+// const newObj: UserSchema = {
+//     username: "user",
+//     password: "pass",
+//     user_level: USER_LEVEL.ADMIN
+// };
 
-const schemaVerifyResult = schema.safeParse(newObj);
-console.log(schemaVerifyResult);
+// const schemaVerifyResult = schema.safeParse(newObj);
+// console.log(schemaVerifyResult);
 
 router.get("/api/user", async (_, res) => {
     const rows = await getUsers();
