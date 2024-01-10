@@ -6,9 +6,10 @@ declare global {
             FRONTEND_PORT: number;
             USERNAME: string;
             PASSWORD: string;
-            DATABASE: string;
-            ALIEN_DB_NAME: string;
+            DEPLOYMENT_NAME: string;
+            MONGO_DB_NAME: string;
             ALIEN_COLLECTION_NAME: string;
+            HUMAN_COLLECTION_NAME: string;
         }
     }
 }
