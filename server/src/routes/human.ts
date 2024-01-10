@@ -56,7 +56,7 @@ router.put("/api/human", async (req, res) => {
     };
 
     try {
-        const humanUpdateResult = await HumanModel.findOneAndUpdate(humanToUpdateId, humanToUpdateFields, {
+        const humanUpdateResult = await HumanModel.findOneAndUpdate<Human>(humanToUpdateId, humanToUpdateFields, {
             new: true
         });
         log.info("Updated human successfully! Congratulations!");
@@ -73,7 +73,7 @@ router.delete("/api/human", async (req, res) => {
     const humanToDeleteId = req.body._id;
 
     try {
-        const humanDeleteResult = await HumanModel.findByIdAndDelete(humanToDeleteId);
+        const humanDeleteResult = await HumanModel.findByIdAndDelete<Human>(humanToDeleteId);
         log.info("Deleted human successfully! Congratulations!");
         return res.status(200).json(humanDeleteResult);
     } catch (err: any) {
