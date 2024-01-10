@@ -5,12 +5,12 @@
 <p>Counter is {{ this.counter() }}</p>
 <p>Counter + 10 (Computed) is {{ this.computedVal() }}</p>
 <div>
-    @for (number of this.numbers(); track number.id) {
-        <h3>{{ number.fName }}</h3>
-        @if (number.fName === "Andrew") {
+    @for (user of this.users(); track user.id) {
+        <h3>{{ user.fName }}</h3>
+        @if (user.fName === "Andrew") {
             <p>GOT ANDREW!</p>
         }
-        @else if (number.id === 2) {
+        @else if (user.id === 2) {
             <p>GOT ANDERSON!</p>
         }
         @else {
