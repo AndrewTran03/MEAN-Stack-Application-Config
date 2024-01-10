@@ -1,5 +1,5 @@
 import express from "express";
-import { AlienModel } from "../models/alien";
+import { AlienModel, alienMongoCollectionName } from "../models/alien";
 import log from "../utils/logger";
 import { Alien } from "../../assets/types";
 
@@ -14,7 +14,7 @@ router.get("/api/alien", async (_, res) => {
 
         currItems.forEach((item, idx) => {
             log.info(`Item ${idx}`);
-            log.info(item);
+            log.info(JSON.stringify(item, null, 2));
         });
 
         log.info(`END OF GET REQUEST #${index} ------------------------`);
@@ -57,7 +57,7 @@ router.put("/api/alien", async (req, res) => {
     };
 
     try {
-        const alienUpdateResult = await AlienModel.findByIdAndUpdate(alienToUpdateId, alienToUpdateFields, {
+        const alienUpdateResult = await AlienModel.findByIdAndUpdate<Alien>(alienToUpdateId, alienToUpdateFields, {
             new: true
         });
         log.info("Updated alien successfully! Congratulations!");
@@ -74,7 +74,7 @@ router.delete("/api/alien", async (req, res) => {
     const alienToDeleteId = req.body._id;
 
     try {
-        const alienDeleteResult = await AlienModel.findByIdAndDelete(alienToDeleteId);
+        const alienDeleteResult = await AlienModel.findByIdAndDelete<Alien>(alienToDeleteId);
         log.info("Deleted alien successfully! Congratulations!");
         return res.status(200).json(alienDeleteResult);
     } catch (err: any) {
