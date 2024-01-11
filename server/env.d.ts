@@ -10,6 +10,7 @@ declare global {
             MONGO_DB_NAME: string;
             ALIEN_COLLECTION_NAME: string;
             HUMAN_COLLECTION_NAME: string;
+            AUTH_COLLECTION_NAME: string;
         }
     }
 }
