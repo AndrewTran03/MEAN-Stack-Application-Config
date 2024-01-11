@@ -1,7 +1,7 @@
 <p>header works!</p>
-<button (click)="incrementCounter()">Increment</button>
-<button (click)="decrementCounter()">Decrement</button>
-<button (click)="setStaticDefaultCounter()">Reset Default</button>
+<button (click)="this.incrementCounter()">Increment</button>
+<button (click)="this.decrementCounter()">Decrement</button>
+<button (click)="this.setStaticDefaultCounter()">Reset Default</button>
 <p>Counter is {{ this.counter() }}</p>
 <p>Counter + 10 (Computed) is {{ this.computedVal() }}</p>
 <div>
