@@ -4,7 +4,7 @@ import { openSQLDatabase, closeSQLDatabase } from "../utils/sqlConnection";
 import log from "../utils/logger";
 import { z } from "zod";
 
-// Demonstration on how to Use/Interact with a SQL Database (Insert, Delete, Update): 
+// Demonstration on how to Use/Interact with a SQL Database (Insert, Delete, Update):
 const router = express.Router();
 
 enum USER_LEVEL {
