@@ -11,6 +11,7 @@ import { AlienService } from "../services/alien.service";
 })
 export class HeaderComponent {
     private alienService = inject(AlienService);
+    private consoleClearInterval: number | undefined;
     private refreshInterval: number | undefined;
     private readonly MAX_TIMER_INTERVAL = 5000;
 
@@ -33,14 +34,25 @@ export class HeaderComponent {
             console.log(this.aliens());
         });
 
-        effect((onCleanup) => {
+        effect((onCleanupFn) => {
             this.refreshInterval = window.setInterval(() => {
                 this.getAlienData();
             }, this.MAX_TIMER_INTERVAL);
 
-            onCleanup(() => {
+            onCleanupFn(() => {
                 console.assert(this.refreshInterval !== undefined);
                 clearInterval(this.refreshInterval);
+            });
+        });
+
+        effect((onCleanupFn) => {
+            this.consoleClearInterval = window.setInterval(() => {
+                console.clear();
+            }, this.MAX_TIMER_INTERVAL * 6);
+
+            onCleanupFn(() => {
+                console.assert(this.consoleClearInterval !== undefined);
+                clearInterval(this.consoleClearInterval);
             });
         });
     }
