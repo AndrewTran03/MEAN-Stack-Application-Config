@@ -8,7 +8,7 @@ async function ensureConnectionToMongoDatabase() {
 
     try {
         log.info(dbUri);
-        await mongoose.connect(dbUri, { useNewUrlParser: true });
+        await mongoose.connect(dbUri);
         log.info("Sucessfully initiated connection to MongoDB");
     } catch (e) {
         log.error("Failed to connect to MongoDB. Exiting now...");
