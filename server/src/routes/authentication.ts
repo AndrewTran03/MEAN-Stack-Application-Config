@@ -1,147 +1,80 @@
 import express from "express";
-import { UserAuth } from "../../assets/types";
-import { openSQLDatabase, closeSQLDatabase } from "../utils/sqlConnection";
+import { UserAuthModel, userAuthMongoCollectionName } from "../models/user_auth";
 import log from "../utils/logger";
-import { z } from "zod";
+import { UserAuth } from "../../assets/types";
+import bcrypt from "bcrypt";
 
 const router = express.Router();
 
-enum USER_LEVEL {
-    ADMIN = "admin",
-    OWNER = "owner",
-    EMPLOYEE = "employee",
-    CUSTOMER = "customer",
-    OTHER = "reg_user"
-}
-
-// Test Code for Schema Validation
-// const schema = z.object({
-//     username: z.string(),
-//     password: z.string(),
-//     user_level: z.enum(["admin", "owner", "employee", "customer", "reg_user"])
-// });
-
-// type UserSchema = z.infer<typeof schema>;
-
-// const newObj: UserSchema = {
-//     username: "user",
-//     password: "pass",
-//     user_level: USER_LEVEL.ADMIN
-// };
-
-// const schemaVerifyResult = schema.safeParse(newObj);
-// console.log(schemaVerifyResult);
-
+let index = 0;
 router.get("/api/user", async (_, res) => {
-    const rows = await getUsers();
-    if (rows !== null) return res.status(200).json(rows);
-    else return res.status(400).send({ message: "GET - FAILED" });
-});
-
-router.post("/api/user", async (req, res) => {
-    const insertFields: UserAuth = {
-        username: req.body.username as string,
-        password: req.body.password as string,
-        user_level: req.body.user_level as string
-    };
-    const result = await insertUser(insertFields);
-    if (result === true) return res.status(201).send({ message: "INSERT - TRUE" });
-    else return res.status(400).send({ message: "INSERT - FALSE" });
-});
-
-router.delete("/api/user", async (req, res) => {
-    const userIdToDelete = req.body.id as number;
-    const result = await deleteUser(userIdToDelete);
-    if (result === true) return res.status(200).send({ message: "DELETE - TRUE" });
-    else return res.status(400).send({ message: "DELETE - FALSE" });
-});
-
-router.put("/api/user", async (req, res) => {
-    const userIdToUpdate = req.body.id as number;
-    const updateFields: UserAuth = {
-        username: req.body.username as string,
-        password: req.body.password as string,
-        user_level: req.body.user_level as string
-    };
-    const result = await updateUser(userIdToUpdate, updateFields);
-    if (result === true) return res.status(200).send({ message: "UPDATE - TRUE" });
-    else return res.status(400).send({ message: "UPDATE - FALSE" });
-});
-
-async function getUsers() {
-    const sqlDatabase = openSQLDatabase();
-
-    const getQuery = `SELECT * FROM AUTHENTICATION`;
     try {
-        const rows = await new Promise((resolve, reject) => {
-            sqlDatabase.all(getQuery, [], (err, rows) => {
-                if (err) {
-                    reject(err);
-                    return;
-                }
-                resolve(rows);
-            });
+        const currItems = await UserAuthModel.find();
+
+        currItems.forEach((item, idx) => {
+            log.info(`Item ${idx}`);
+            log.info(JSON.stringify(item, null, 2));
         });
-        return rows;
+
+        log.info(`END OF GET REQUEST #${index} ------------------------`);
+        index++;
+        return res.status(200).json(currItems);
     } catch (err: any) {
-        log.error(err.message);
-    } finally {
-        closeSQLDatabase(sqlDatabase);
+        log.error("Did not find any users! Please try again!");
+        // TODO: Update with better error-handling logic
+        return res.status(400).send({ Error_GET: err.message });
     }
+});
 
-    return null;
-}
+router.post("/api/register", async (req, res) => {
+    const unhashedUserPassword = req.body.password;
+    const numRoundsGenSalt = 10;
+    const hashedUserPassword = bcrypt.hashSync(unhashedUserPassword, numRoundsGenSalt);
 
-async function insertUser(insertFields: UserAuth) {
-    const sqlDatabase = openSQLDatabase();
-
-    const insertQuery = `INSERT INTO AUTHENTICATION (username, password, user_level) VALUES (?, ?, ?)`;
-    sqlDatabase.run(insertQuery, [insertFields.username, insertFields.password, insertFields.user_level], (err) => {
-        if (err) {
-            log.error(err.message);
-            return false;
-        }
-        log.info("SUCESSFULLY INSERTED INTO THE SQL DATABASE");
+    const newUserToInsert = new UserAuthModel({
+        username: req.body.username,
+        password: hashedUserPassword,
+        user_level: req.body.user_level
     });
 
-    closeSQLDatabase(sqlDatabase);
-    return true;
-}
+    try {
+        const userInsertResult = await newUserToInsert.save();
+        log.info("Inserted user successfully! Congratulations!");
+        return res.status(201).json(userInsertResult); // 201 = Successful Resource Creation
+    } catch (err: any) {
+        log.error({ Error_POST: err });
+        // TODO: Update with better error-handling logic
+        log.error("Could not insert the specified user! Please try again!");
+        return res.status(400).send({ Error_POST: err.message });
+    }
+});
 
-async function deleteUser(deleteUserId: number) {
-    const sqlDatabase = openSQLDatabase();
+router.post("/api/login", async (req, res) => {
+    const userEnteredUsername = req.body.userName;
+    const userEnteredPassword = req.body.password;
 
-    const deleteQuery = `DELETE FROM AUTHENTICATION WHERE id = (?)`;
-    sqlDatabase.run(deleteQuery, [deleteUserId], (err) => {
-        if (err) {
-            log.error(err.message);
-            return false;
-        }
-        log.info("SUCESSFULLY DELETED FROM THE SQL DATABASE");
-    });
-
-    closeSQLDatabase(sqlDatabase);
-    return true;
-}
-
-async function updateUser(updateUserId: number, updateFields: UserAuth) {
-    const sqlDatabase = openSQLDatabase();
-
-    const updateQuery = `UPDATE AUTHENTICATION SET username = (?), password = (?), user_level = (?) WHERE id = (?)`;
-    sqlDatabase.run(
-        updateQuery,
-        [updateFields.username, updateFields.password, updateFields.user_level, updateUserId],
-        (err) => {
-            if (err) {
-                log.error(err.message);
-                return false;
+    try {
+        await UserAuthModel.findOne<UserAuth>({ username: userEnteredUsername }).then((matchingUser) => {
+            if (!matchingUser) {
+                log.error("There exists no user with that username altogether!");
+                return res.status(401).send({ Error_POST: "Invalid username" });
             }
-            log.info("SUCESSFULLY UPDATED FROM THE SQL DATABASE");
-        }
-    );
 
-    closeSQLDatabase(sqlDatabase);
-    return true;
-}
+            const validUserResult = bcrypt.compareSync(userEnteredPassword, matchingUser.password);
+            if (validUserResult) {
+                log.info("Found a valid user with the specified username & password combination!");
+                return res.send(200).send(matchingUser);
+            } else {
+                log.error("There exists no user with that username & password combination!");
+                return res.status(401).send({ Error_POST: "Invalid password" });
+            }
+        });
+    } catch (err: any) {
+        log.error({ Error_POST: err });
+        // TODO: Update with better error-handling logic
+        log.error("Could not find the specified user! Please try again!");
+        return res.status(400).send({ Error_POST: err.message });
+    }
+});
 
-export { insertUser, deleteUser, updateUser, router as userRouter };
+export { router as userRouter };
