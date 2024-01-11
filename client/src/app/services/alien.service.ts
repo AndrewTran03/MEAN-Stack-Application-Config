@@ -1,8 +1,8 @@
-import { Injectable, inject } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { JsonRequestConfig, backendUrlBase, BACKEND_API_ENDPOINTS, AlienBase } from "../shared/types";
 import { Alien, HTTP_REQUEST_METHODS } from "../shared/types";
 import { FrontendParser } from "../shared/frontend.parser";
-import { Axios } from "axios";
+import axios, { AxiosInstance } from "axios";
 
 // Reference: https://jasonwatmore.com/post/2021/09/21/fetch-http-delete-request-examples
 @Injectable({
@@ -13,11 +13,16 @@ export class AlienService {
     jsonRequest: JsonRequestConfig = {
         method: HTTP_REQUEST_METHODS.DEFAULT_DOES_NOT_WORK
     };
+    private axiosInstance: AxiosInstance;
 
-    // constructor(private axios: Axios) {
     constructor() {
         console.log(`BACKEND API URL: ${this.aliensMongoDBURL}`);
-        // this.axios.get<Alien>("")
+        this.axiosInstance = axios.create({
+            baseURL: this.aliensMongoDBURL,
+            headers: { "Content-Type": "application/json" },
+            timeout: 10000
+        });
+        // this.axiosInstance.get<Alien>("")
         //     .then()
         //     .catch();
     }
