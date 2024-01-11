@@ -11,7 +11,7 @@ import { AlienService } from "../services/alien.service";
 })
 export class HeaderComponent {
     private alienService = inject(AlienService);
-    private refreshInterval: any;
+    private refreshInterval: number | undefined;
     readonly MAX_TIMER_INTERVAL = 5000;
 
     aliens = signal<Alien[]>([]);
@@ -34,11 +34,12 @@ export class HeaderComponent {
         });
 
         effect((onCleanup) => {
-            this.refreshInterval = setInterval(() => {
+            this.refreshInterval = window.setInterval(() => {
                 this.getAlienData();
             }, this.MAX_TIMER_INTERVAL);
 
             onCleanup(() => {
+                console.assert(this.refreshInterval !== undefined);
                 clearInterval(this.refreshInterval);
             });
         });
