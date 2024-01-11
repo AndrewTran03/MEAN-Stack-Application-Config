@@ -19,7 +19,12 @@ increasing order of severity, are:
 */
 const log: Logger = logger({
     level: level,
-    transport: { target: "pino-pretty" },
+    transport: {
+        target: "pino-pretty",
+        options: {
+            colorize: true
+        }
+    },
     base: { pid: false },
     timestamp: () => `, "time":"${dayjs().format()}"`
 });
