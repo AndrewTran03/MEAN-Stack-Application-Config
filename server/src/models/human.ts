@@ -34,6 +34,6 @@ const HumanSchema = new mongoose.Schema<Human>(
     }
 );
 
-const HumanModel = mongoose.model(`${mongoDBName}_Human`, HumanSchema);
+const HumanModel = mongoose.model<Human>(`${mongoDBName}_Human`, HumanSchema);
 
 export { HumanModel, humanMongoCollectionName };

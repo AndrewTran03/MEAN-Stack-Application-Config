@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import config from "config";
 import { Alien } from "../../assets/types";
+import * as z from "zod";
 
 const mongoDBName = config.get<string>("mongoDatabaseName");
 const alienMongoCollectionName = config.get<string>("alienMongoCollectionName");
@@ -34,6 +35,6 @@ const AlienSchema = new mongoose.Schema<Alien>(
     }
 );
 
-const AlienModel = mongoose.model(`${mongoDBName}_Alien`, AlienSchema);
+const AlienModel = mongoose.model<Alien>(`${mongoDBName}_Alien`, AlienSchema);
 
 export { AlienModel, alienMongoCollectionName };

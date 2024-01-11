@@ -30,6 +30,6 @@ const UserAuthSchema = new mongoose.Schema<UserAuth>(
     }
 );
 
-const UserAuthModel = mongoose.model(`${mongoDBName}_UserAuth`, UserAuthSchema);
+const UserAuthModel = mongoose.model<UserAuth>(`${mongoDBName}_UserAuth`, UserAuthSchema);
 
 export { UserAuthModel, userAuthMongoCollectionName };
