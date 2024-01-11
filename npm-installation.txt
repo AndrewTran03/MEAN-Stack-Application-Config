@@ -41,7 +41,7 @@ touch tslint.json
 
 Install Extra Dependencies:
 
-npm install --save-dev axios zod zod-validation-error socket.io-client sqlite3 @types/sqlite3
+npm install --save-dev axios zod zod-validation-error socket.io-client d3 @types/d3
 
 Setup Node.js / Express.js Backend (with TypeScript):
 
@@ -95,5 +95,5 @@ node_modules/
 // End of .prettierignore
 
 Install Extra Dependencies:
-npm install --save-dev @types/config pino-pretty @types/cors @types/mongodb @types/cors @types/mongoose @typegoose/typegoose @types/dotenv @types/bcrypt
-npm install --save-dev mongoose config argon2 pino dayjs dotenv mongodb cors zod zod-validation-error socket.io bcrypt
+npm install --save-dev @types/config pino-pretty @types/cors @types/mongodb @types/cors @types/mongoose @typegoose/typegoose @types/dotenv @types/bcrypt @types/sqlite3
+npm install --save-dev mongoose config argon2 pino dayjs dotenv mongodb cors zod zod-validation-error socket.io bcrypt sqlite3
