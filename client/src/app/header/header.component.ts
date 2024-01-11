@@ -12,7 +12,7 @@ import { AlienService } from "../services/alien.service";
 export class HeaderComponent {
     private alienService = inject(AlienService);
     private refreshInterval: number | undefined;
-    readonly MAX_TIMER_INTERVAL = 5000;
+    private readonly MAX_TIMER_INTERVAL = 5000;
 
     aliens = signal<Alien[]>([]);
 
