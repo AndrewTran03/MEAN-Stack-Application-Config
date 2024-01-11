@@ -1,5 +1,5 @@
-import { Component, computed, effect, signal, OnInit, OnDestroy, inject } from "@angular/core";
-import { GenericUser, Alien, AlienBase, Prettify } from "../shared/types";
+import { Component, computed, effect, signal, OnInit, OnDestroy, inject, EffectRef } from "@angular/core";
+import { GenericUser, Alien } from "../shared/types";
 import { AlienService } from "../services/alien.service";
 
 @Component({
@@ -9,7 +9,7 @@ import { AlienService } from "../services/alien.service";
     templateUrl: "./header.component.html",
     styleUrl: "./header.component.css"
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent {
     private alienService = inject(AlienService);
     private refreshInterval: any;
     readonly MAX_TIMER_INTERVAL = 5000;
@@ -32,24 +32,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
         effect(() => {
             console.log(this.aliens());
         });
-    }
 
-    ngOnInit() {
-        this.refresh();
-    }
+        effect((onCleanup) => {
+            this.refreshInterval = setInterval(() => {
+                this.getAlienData();
+            }, this.MAX_TIMER_INTERVAL);
 
-    ngOnDestroy() {
-        clearInterval(this.refreshInterval);
-    }
-
-    refresh() {
-        this.getAlienData();
-        if (this.refreshInterval) {
-            clearInterval(this.refreshInterval);
-        }
-        this.refreshInterval = setInterval(() => {
-            this.getAlienData();
-        }, this.MAX_TIMER_INTERVAL);
+            onCleanup(() => {
+                clearInterval(this.refreshInterval);
+            });
+        });
     }
 
     incrementCounter() {
