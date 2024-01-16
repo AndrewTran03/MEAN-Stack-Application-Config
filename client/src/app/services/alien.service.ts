@@ -1,8 +1,11 @@
 import { Injectable } from "@angular/core";
-import { JsonRequestConfig, backendUrlBase, BACKEND_API_ENDPOINTS, AlienBase } from "../shared/types";
+import { JsonRequestConfig, backendUrlBase, BACKEND_API_ENDPOINTS, AlienBase, APIErrorResponse } from "../shared/types";
 import { Alien, HTTP_REQUEST_METHODS } from "../shared/types";
 import { FrontendParser } from "../shared/frontend.parser";
-import axios, { AxiosInstance } from "axios";
+import { APIRequestError } from "../shared/api.error";
+import axios, { AxiosError, AxiosInstance } from "axios";
+import { AlienSchema } from "./alien.schema";
+import { fromZodError } from "zod-validation-error";
 
 // Reference: https://jasonwatmore.com/post/2021/09/21/fetch-http-delete-request-examples
 @Injectable({
@@ -22,9 +25,6 @@ export class AlienService {
             headers: { "Content-Type": "application/json" },
             timeout: 10000
         });
-        // this.axiosInstance.get<Alien>("")
-        //     .then()
-        //     .catch();
     }
 
     async getAliens(): Promise<Alien[]> {
@@ -32,40 +32,98 @@ export class AlienService {
         this.jsonRequest.headers = undefined;
         this.jsonRequest.body = undefined;
         this.printJsonReqObjConfigHelper();
-        // TODO: Update with better error-handling logic
-        return await fetch(this.aliensMongoDBURL, this.jsonRequest)
-            .then((res) => res.json())
-            .then(FrontendParser.parseAlienEntries);
+
+        // FETCH:
+        // const res = await fetch(this.aliensMongoDBURL, this.jsonRequest);
+        // try {
+        //     if (!res.ok) {
+        //         const { errorLoc, errorMsg }: APIErrorResponse = await res.json();
+        //         throw new APIRequestError("Failed to get Aliens!", { errorLoc, errorMsg });
+        //     }
+        //     const data = (await res.json()) as any[];
+        //     return FrontendParser.parseAlienEntries(data);
+        // } catch (err: any) {
+        //     const error = err as APIRequestError;
+        //     console.error(error.toString());
+        //     return [];
+        // }
+
+        // AXIOS:
+        return await this.axiosInstance
+            .get(this.aliensMongoDBURL)
+            .then((res) => {
+                const data = res.data as any[];
+                return FrontendParser.parseAlienEntries(data);
+            })
+            .catch((err: AxiosError) => {
+                const errorConfig = err.response?.data as APIErrorResponse;
+                const error = new APIRequestError("Failed to GET all aliens", errorConfig);
+                console.error(error.toString());
+                return [];
+            });
     }
 
-    async insertAlien(alienToInsert: AlienBase) {
+    async insertAlien(alienToInsert: AlienBase): Promise<void> {
         this.jsonRequest.method = HTTP_REQUEST_METHODS.POST;
         this.jsonRequest.headers = { "Content-Type": "application/json" };
         this.jsonRequest.body = JSON.stringify(alienToInsert);
         this.printJsonReqObjConfigHelper();
-        // TODO: Update with better error-handling logic
-        return await fetch(this.aliensMongoDBURL, this.jsonRequest);
+
+        const result = AlienSchema.safeParse(alienToInsert);
+        if (!result.success) {
+            console.error(fromZodError(result.error));
+            // alert(fromZodError(result.error));
+        }
+
+        await this.axiosInstance
+            .post(this.aliensMongoDBURL, alienToInsert)
+            .then((res) => console.log(res))
+            .catch((err: AxiosError) => {
+                const errorConfig = err.response?.data as APIErrorResponse;
+                const error = new APIRequestError("Failed to INSERT this alien", errorConfig);
+                console.error(error.toString());
+            });
     }
 
-    async deleteAlien(alienToDeleteId: string) {
+    async deleteAlien(alienToDeleteId: string): Promise<void> {
         this.jsonRequest.method = HTTP_REQUEST_METHODS.DELETE;
         this.jsonRequest.headers = undefined;
         this.jsonRequest.body = JSON.stringify({ _id: alienToDeleteId });
         this.printJsonReqObjConfigHelper();
-        // TODO: Update with better error-handling logic
-        return await fetch(this.aliensMongoDBURL, this.jsonRequest);
+
+        await this.axiosInstance
+            .delete(`${this.aliensMongoDBURL}/${alienToDeleteId}`)
+            .then((res) => console.log(res))
+            .catch((err: AxiosError) => {
+                const errorConfig = err.response?.data as APIErrorResponse;
+                const error = new APIRequestError("Failed to DELETE this alien", errorConfig);
+                console.error(error.toString());
+            });
     }
 
-    async updateAlien(alienToUpdate: Alien) {
+    async updateAlien(alienToUpdate: Alien): Promise<void> {
         this.jsonRequest.method = HTTP_REQUEST_METHODS.PUT;
         this.jsonRequest.headers = { "Content-Type": "application/json" };
         this.jsonRequest.body = JSON.stringify(alienToUpdate);
         this.printJsonReqObjConfigHelper();
-        // TODO: Update with better error-handling logic
-        return await fetch(this.aliensMongoDBURL, this.jsonRequest);
+
+        const { _id, __v, createdDate, updatedDate, ...alienToUpdateParseCheck } = alienToUpdate;
+        const result = AlienSchema.safeParse(alienToUpdateParseCheck);
+        if (!result.success) {
+            console.error(fromZodError(result.error));
+        }
+
+        await this.axiosInstance
+            .put(this.aliensMongoDBURL, alienToUpdate)
+            .then((res) => console.log(res))
+            .catch((err: AxiosError) => {
+                const errorConfig = err.response?.data as APIErrorResponse;
+                const error = new APIRequestError("Failed to UPDATE this alien", errorConfig);
+                console.error(error.toString());
+            });
     }
 
-    printJsonReqObjConfigHelper() {
+    private printJsonReqObjConfigHelper() {
         console.log(`${this.jsonRequest.method}`, JSON.stringify(this.jsonRequest));
     }
 }
