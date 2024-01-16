@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import config from "config";
 import { Alien } from "../../assets/types";
-import * as z from "zod";
 
 const mongoDBName = config.get<string>("mongoDatabaseName");
 const alienMongoCollectionName = config.get<string>("alienMongoCollectionName");
