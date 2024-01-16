@@ -5,6 +5,11 @@ type Prettify<T> = {
     [K in keyof T]: T[K];
 } & {};
 
+type APIErrorResponse = {
+    errorLoc: string;
+    errorMsg: string;
+};
+
 type Alien = {
     name: string;
     tech: string;
@@ -25,4 +30,4 @@ type Human = {
     isACitizen: boolean;
 };
 
-export { Alien, UserAuth, Human };
+export { APIErrorResponse, Alien, UserAuth, Human };
