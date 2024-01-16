@@ -78,7 +78,8 @@ export class HeaderComponent {
     }
 
     getAlienData() {
-        // TODO: Update with better error-handling logic
-        this.alienService.getAliens().then((data) => this.aliens.set(data));
+        this.alienService.getAliens().then((data: Alien[]) => {
+            this.aliens.update((prevAliens) => (data.length !== 0 ? data : prevAliens));
+        });
     }
 }
