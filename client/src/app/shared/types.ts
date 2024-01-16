@@ -45,6 +45,11 @@ type JsonRequestConfig = {
     body?: string;
 };
 
+type APIErrorResponse = {
+    errorLoc: string;
+    errorMsg: string;
+};
+
 type AlienBase = {
     name: string;
     tech: string;
@@ -63,5 +68,6 @@ export {
     MongoDBEntry,
     Alien,
     AlienBase,
-    JsonRequestConfig
+    JsonRequestConfig,
+    APIErrorResponse
 };
