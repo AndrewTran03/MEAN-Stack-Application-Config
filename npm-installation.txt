@@ -1,24 +1,27 @@
 #! /bin/bash
 
-Setup Angular Front-End:
+[1.1] Setup Angular Front-End (with TypeScript):
 
 ng new project-frontend
 cd project-frontend
 npm update
 npm install --save-dev --save-exact prettier tslint-config-prettier
+/* Add this into the 'scripts' for the 'package.json' */
+"format": "prettier --write '**/*.ts*' '**/*.js*' '**/*.css' '**/*.html'",
+
 touch .prettierrc.json
 /* Add this to your '.prettierrc.json': */
 {
-    "printWidth": 120,
-    "tabWidth": 4,
-    "useTabs": false,
-    "semi": true,
-    "singleQuote": false,
-    "trailingComma": "none",
-    "bracketSpacing": true,
-    "requirePragma": false,
-    "proseWrap": "preserve",
-    "arrowParens": "always"
+  "printWidth": 120,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "requirePragma": false,
+  "proseWrap": "preserve",
+  "arrowParens": "always"
 }
 
 // End of .prettierrc.json
@@ -43,7 +46,195 @@ Install Extra Dependencies:
 
 npm install --save-dev axios zod zod-validation-error socket.io-client d3 @types/d3
 
-Setup Node.js / Express.js Backend (with TypeScript):
+[1.2] Setup React Front-End (with TypeScript and Vite Build):
+
+npm create vite@latest (or Place in Current Directory: npm create vite@latest ./)
+    - Select React 
+    - Select React + TypeScript (no SWC)
+    - If you created a new directory, cd into that project directory name
+npm install
+npm install --save-dev --save-exact prettier tslint-config-prettier
+/* Add this into the 'scripts' section for the 'package.json': */
+"format": "prettier --write '**/*.ts*' '**/*.js*' '**/*.css' '**/*.html'",
+
+touch .prettierrc.json
+/* Add this to your '.prettierrc.json': */
+{
+  "printWidth": 120,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "requirePragma": false,
+  "proseWrap": "preserve",
+  "arrowParens": "always"
+}
+
+// End of .prettierrc.json
+
+touch .prettierignore
+/* Add this to your '.prettierignore': */
+node_modules/
+dist/
+build/
+
+// End of .prettierignore
+
+/* Replace the content of 'tsconfig.json' with this: */
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
+
+// End of tsconfig.json
+
+/* Add this into the 'rules' section for the '.eslintrc.cjs': */
+"@typescript-eslint/no-unused-vars": "warn",
+"@typescript-eslint/ban-types": "warn",
+"@typescript-eslint/no-explicit-any": "warn"
+
+Install Extra Dependencies:
+
+npm install --save-dev @mui/material @emotion/react @emotion/styled
+npm install --save-dev axios zod zod-validation-error socket.io-client d3 @types/d3 react-router-dom
+npm install --save-dev react-cookie
+npm install --save-dev react-drag-drop-files
+npm install --save-dev react-vis @types/react-vis --legacy-peer-deps
+
+cd src/
+touch AppRouter.tsx
+/* Add this to your 'AppRouter.tsx': */
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+
+const AppRouter: React.FC = () => {
+  return (
+    <>
+      <Router>
+        <Routes>
+            {/* Custom React Routes Go Here */}
+        </Routes>
+      </Router>
+    </>
+  );
+};
+
+export default AppRouter;
+
+// End of AppRouter.tsx
+
+/* Replace the content of 'App.tsx' with this: */
+import "./App.css";
+import AppRouter from "./AppRouter";
+
+const App: React.FC = () => {
+  return (
+    <AppRouter />     
+  );
+};
+
+export default App;
+
+// End of App.tsx
+
+mkdir components/
+touch index.ts Example.tsx
+{/* Add this to your 'Example.tsx': */}
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+
+const Example: React.FC = () => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <div>
+        <a href="https://vitejs.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
+        <p>
+          Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
+      </div>
+      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+    </>
+  );
+}
+
+export default Example;
+
+// End of Example.tsx
+{/* Add this to your 'index.ts': */}
+import Example from "./Example";
+
+export { Example };
+
+// End of index.ts
+cd ..
+mkdir shared/
+cd shared/
+touch types.ts
+{/* Add this to your 'types.ts': */}
+// Shared Typescript Types/Interfaces/Other Global-Variables Used Throughout the Project:
+
+// Reference: https://www.totaltypescript.com/concepts/the-prettify-helper
+type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
+
+export {};
+
+// End of types.ts
+
+- NOTE: For both parts [1.1] and [1.2], at the parent directory level, please make a 'run_frontend.sh' script for easier convenience.
+touch run_frontend.sh
+{/* Add this to your 'run_frontend.sh' script: */}
+# !/bin/bash
+
+echo "|-------- Beginning of Running Front-End Script --------|"
+echo "Installing NPM Dependencies"
+time npm install
+echo "Running React + Vite Frontend:"
+npm run format
+npm run dev
+echo "|-------- End of Running Front-End Script --------|"
+
+// End of run_frontend.sh
+
+[2] Setup Node.js / Express.js Backend (with TypeScript):
 
 mkdir project-backend
 cd project-backend
@@ -74,16 +265,16 @@ npm install --save-dev --save-exact prettier tslint-config-prettier
 ouch .prettierrc.json
 /* Add this to your '.prettierrc.json': */
 {
-    "printWidth": 120,
-    "tabWidth": 4,
-    "useTabs": false,
-    "semi": true,
-    "singleQuote": false,
-    "trailingComma": "none",
-    "bracketSpacing": true,
-    "requirePragma": false,
-    "proseWrap": "preserve",
-    "arrowParens": "always"
+  "printWidth": 120,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "requirePragma": false,
+  "proseWrap": "preserve",
+  "arrowParens": "always"
 }
 
 // End of .prettierrc.json
@@ -97,3 +288,48 @@ node_modules/
 Install Extra Dependencies:
 npm install --save-dev @types/config pino-pretty @types/cors @types/mongodb @types/cors @types/mongoose @typegoose/typegoose @types/dotenv @types/bcrypt @types/sqlite3
 npm install --save-dev mongoose config argon2 pino dayjs dotenv mongodb cors zod zod-validation-error socket.io bcrypt sqlite3
+
+cd src/
+mkdir shared/
+touch types.ts
+{/* Add this to your 'types.ts': */}
+// Shared Typescript Types/Interfaces/Other Global-Variables Used Throughout the Project:
+
+// Reference: https://www.totaltypescript.com/concepts/the-prettify-helper
+type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
+
+export {};
+
+// End of types.ts
+
+- NOTE: At the parent directory level, please make a 'run_backend.sh' script for easier convenience.
+touch run_backend.sh
+# !/bin/bash
+
+echo "|-------- Beginning of Running Back-End Script --------|"
+echo "Installing NPM Dependencies:"
+time npm install
+echo "Removing Files Older Than 2 Days in the 'logs' dir:"
+find ./logs -type f -mtime +2 -exec rm {} \;
+echo "Setting up Logging Solution (for Later Backend Debugging):"
+log_dir="./logs"
+if [ -d "$log_dir" ]; then
+    echo "Directory $log_dir already exists."
+else
+    mkdir "$log_dir"
+    echo "Directory $log_dir created."
+fi
+cd "$log_dir"
+file_name="log_$(date +'%m-%d-%y-%T').txt"
+touch $file_name
+cd ..
+echo "Running JavaScript MongoDB/Express.js/Node.js Backend (with TypeScript):"
+npm run format
+npm_config_color=always npm run start 2>&1 | tee -a "./logs/$file_name"
+echo "|-------- End of Running Back-End Script --------|"
+
+// End of run_backend.sh
+
+LAST NOTE: To not make this document too long, please look around this repository for other frontend/backend configuration needs.
