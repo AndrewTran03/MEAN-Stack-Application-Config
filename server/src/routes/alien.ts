@@ -47,7 +47,7 @@ router.post("/api/alien", async (req, res) => {
         const resErrBody: APIErrorResponse = {
             errorLoc: "POST",
             errorMsg: "Failed to insert into the MongoDB database"
-        }
+        };
         return res.status(400).send(JSON.stringify(resErrBody));
     }
 });
@@ -72,7 +72,7 @@ router.put("/api/alien", async (req, res) => {
         const resErrBody: APIErrorResponse = {
             errorLoc: "PUT",
             errorMsg: "Failed to update the MongoDB database"
-        }
+        };
         return res.status(400).send(JSON.stringify(resErrBody));
     }
 });
@@ -89,7 +89,7 @@ router.delete("/api/alien/:_id", async (req, res) => {
         const resErrBody: APIErrorResponse = {
             errorLoc: "DELETE",
             errorMsg: "Failed to delete from the MongoDB database"
-        }
+        };
         return res.status(400).send(JSON.stringify(resErrBody));
     }
 });
