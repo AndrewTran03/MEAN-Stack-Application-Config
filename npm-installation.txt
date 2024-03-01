@@ -129,7 +129,7 @@ npm install --save-dev react-vis @types/react-vis --legacy-peer-deps
 cd src/
 touch AppRouter.tsx
 /* Add this to your 'AppRouter.tsx': */
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const AppRouter: React.FC = () => {
   return (
