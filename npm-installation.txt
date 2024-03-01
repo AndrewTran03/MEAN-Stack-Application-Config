@@ -165,9 +165,9 @@ mkdir components/
 touch index.ts Example.tsx
 {/* Add this to your 'Example.tsx': */}
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import reactLogo from "../assets/react.svg";
 import viteLogo from "/vite.svg";
-import "./App.css";
+import "../App.css";
 
 const Example: React.FC = () => {
   const [count, setCount] = useState(0);
