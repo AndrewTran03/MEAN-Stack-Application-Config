@@ -186,7 +186,7 @@ const Example: React.FC = () => {
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Edit <code>src/components/Example.tsx</code> and save to test HMR
         </p>
       </div>
       <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
@@ -221,7 +221,20 @@ export {};
 
 - NOTE: For both parts [1.1] and [1.2], at the parent directory level, please make a 'run_frontend.sh' script for easier convenience.
 touch run_frontend.sh
-{/* Add this to your 'run_frontend.sh' script: */}
+{/* Add this to your 'run_frontend.sh' script - Angular: */}
+# !/bin/bash
+
+echo "|-------- Beginning of Running Front-End Script --------|"
+echo "Installing NPM Dependencies"
+time npm install
+echo "Running Angular Frontend:"
+npm run format
+npm run start
+echo "|-------- End of Running Front-End Script --------|"
+
+// End of run_frontend.sh
+
+{/* Add this to your 'run_frontend.sh' script - React: */}
 # !/bin/bash
 
 echo "|-------- Beginning of Running Front-End Script --------|"
