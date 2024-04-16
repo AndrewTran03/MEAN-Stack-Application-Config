@@ -2,32 +2,32 @@
 
 // Reference: https://www.totaltypescript.com/concepts/the-prettify-helper
 type Prettify<T> = {
-    [K in keyof T]: T[K];
+  [K in keyof T]: T[K];
 } & {};
 
 type APIErrorResponse = {
-    errorLoc: string;
-    errorMsg: string;
+  errorLoc: string;
+  errorMsg: string;
 };
 
 type Alien = {
-    name: string;
-    tech: string;
-    age: number;
-    sub: boolean;
+  name: string;
+  tech: string;
+  age: number;
+  sub: boolean;
 };
 
 type UserAuth = {
-    username: string;
-    password: string;
-    user_level: string;
+  username: string;
+  password: string;
+  user_level: string;
 };
 
 type Human = {
-    name: string;
-    personality: string;
-    age: number;
-    isACitizen: boolean;
+  name: string;
+  personality: string;
+  age: number;
+  isACitizen: boolean;
 };
 
 export { APIErrorResponse, Alien, UserAuth, Human };

@@ -1,16 +1,14 @@
 {
-    "compilerOptions": {
-        "strict": true,
-        "module": "NodeNext",
-        "target": "ESNext",
-        "moduleResolution": "NodeNext",
-        "lib": [
-            "ESNext"
-        ],
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "noPropertyAccessFromIndexSignature": true
-    },
-    "include": ["src/**/*", "./env.d.ts", "config/**/*", "types/**/*"]
+  "compilerOptions": {
+    "strict": true,
+    "module": "NodeNext",
+    "target": "ESNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ESNext"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noPropertyAccessFromIndexSignature": true
+  },
+  "include": ["src/**/*", "./env.d.ts", "config/**/*", "types/**/*"]
 }

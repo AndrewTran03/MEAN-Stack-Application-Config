@@ -6,32 +6,32 @@ const mongoDBName = config.get<string>("mongoDatabaseName");
 const humanMongoCollectionName = config.get<string>("humanMongoCollectionName");
 
 const HumanSchema = new mongoose.Schema<Human>(
-    {
-        name: {
-            type: String,
-            required: true
-        },
-        personality: {
-            type: String,
-            required: true
-        },
-        age: {
-            type: Number,
-            required: true
-        },
-        isACitizen: {
-            type: Boolean,
-            required: true,
-            default: false
-        }
+  {
+    name: {
+      type: String,
+      required: true
     },
-    {
-        timestamps: {
-            createdAt: "created_date",
-            updatedAt: "updated_date"
-        },
-        collection: humanMongoCollectionName
+    personality: {
+      type: String,
+      required: true
+    },
+    age: {
+      type: Number,
+      required: true
+    },
+    isACitizen: {
+      type: Boolean,
+      required: true,
+      default: false
     }
+  },
+  {
+    timestamps: {
+      createdAt: "created_date",
+      updatedAt: "updated_date"
+    },
+    collection: humanMongoCollectionName
+  }
 );
 
 const HumanModel = mongoose.model<Human>(`${mongoDBName}_Human`, HumanSchema);
