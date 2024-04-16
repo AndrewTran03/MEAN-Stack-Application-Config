@@ -254,7 +254,6 @@ cd project-backend
 npm init -y
 mkdir src/
 npm install typescript ts-node --save-dev
-npm install --save-dev --save-exact prettier tslint-config-prettier
 npm install --save-dev express body-parser @types/express 
 npm install --save-dev ts-node-dev @types/node
 
@@ -275,7 +274,10 @@ npm install --save-dev ts-node-dev @types/node
 // End of tsconfig.json
 
 npm install --save-dev --save-exact prettier tslint-config-prettier
-ouch .prettierrc.json
+/* Add this into the 'scripts' for the 'package.json' */
+"format": "prettier --write '**/*.ts*' '**/*.js*'",
+
+touch .prettierrc.json
 /* Add this to your '.prettierrc.json': */
 {
   "printWidth": 120,
