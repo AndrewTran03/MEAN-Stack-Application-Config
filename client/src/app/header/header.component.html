@@ -5,25 +5,25 @@
 <p>Counter is {{ this.counter() }}</p>
 <p>Counter + 10 (Computed) is {{ this.computedVal() }}</p>
 <div>
-    @for (user of this.users(); track user.id) {
-        <h3>{{ user.fName }}</h3>
-        @if (user.fName === "Andrew") {
-            <p>GOT ANDREW!</p>
-        }
-        @else if (user.id === 2) {
-            <p>GOT ANDERSON!</p>
-        }
-        @else {
-            <p>DID NOT GET EITHER!</p>
-        }
+  @for (user of this.users(); track user.id) {
+    <h3>{{ user.fName }}</h3>
+    @if (user.fName === "Andrew") {
+      <p>GOT ANDREW!</p>
+    } @else if (user.id === 2) {
+      <p>GOT ANDERSON!</p>
+    } @else {
+      <p>DID NOT GET EITHER!</p>
     }
-    @empty { <p>NO USERS FOUND!</p> }
+  } @empty {
+    <p>NO USERS FOUND!</p>
+  }
 </div>
 <div>
-    @for (alien of this.aliens(); track alien._id) {
-        <h3>ID: {{ alien._id }}</h3>
-        <p>ALIEN OBJECT:</p>
-        <p>{{ alien.name }} {{ alien.age }} {{ alien.tech }} {{ alien.sub }}</p>
-    }
-    @empty { <p>NO ALIENS FOUND!</p> }
+  @for (alien of this.aliens(); track alien._id) {
+    <h3>ID: {{ alien._id }}</h3>
+    <p>ALIEN OBJECT:</p>
+    <p>{{ alien.name }} {{ alien.age }} {{ alien.tech }} {{ alien.sub }}</p>
+  } @empty {
+    <p>NO ALIENS FOUND!</p>
+  }
 </div>

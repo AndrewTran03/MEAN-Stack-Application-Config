@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
-    "format": "prettier --write '**/*.ts' '**/*.js'",
+    "format": "prettier --write \"**/*.ts*\" \"**/*.js*\" \"**/*.css\" \"**/*.html\"",
     "test": "ng test"
   },
   "private": true,
