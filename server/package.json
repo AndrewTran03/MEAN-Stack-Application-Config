@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node-dev --respawn --transpile-only src/background_app.ts",
-    "format": "prettier --write \"**/*.ts*\" \"**/*.js*\""
+    "build": "tsc --module nodenext --moduleResolution nodenext --target esnext --esModuleInterop true",
+    "format": "prettier --write \"**/*.ts*\" \"**/*.js*\"",
+    "stage": "NODE_ENV=staging node dist/src/background_app.js",
+    "production": "NODE_ENV=production node dist/src/background_app.js"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +27,7 @@
     "@types/sqlite3": "^3.1.11",
     "argon2": "^0.31.2",
     "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
     "config": "^3.3.9",
     "cors": "^2.8.5",
     "dayjs": "^1.11.10",
@@ -33,16 +37,13 @@
     "mongoose": "^8.0.3",
     "pino": "^8.17.2",
     "pino-pretty": "^10.3.1",
+    "prettier": "^3.2.5",
     "socket.io": "^4.7.2",
     "sqlite3": "^5.1.7-rc.0",
     "ts-node-dev": "^2.0.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^5.3.3",
     "zod": "^3.22.4",
     "zod-validation-error": "^2.1.0"
-  },
-  "dependencies": {
-    "body-parser": "^1.20.2",
-    "prettier": "3.1.1",
-    "tslint-config-prettier": "1.18.0"
   }
 }

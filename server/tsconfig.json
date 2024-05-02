@@ -5,6 +5,7 @@
     "target": "ESNext",
     "moduleResolution": "NodeNext",
     "lib": ["ESNext"],
+    "outDir": "dist",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
