@@ -1,7 +1,7 @@
-<p>header works!</p>
-<button (click)="this.incrementCounter()">Increment</button>
-<button (click)="this.decrementCounter()">Decrement</button>
-<button (click)="this.setStaticDefaultCounter()">Reset Default</button>
+<p class="text-3xl font-bold underline">header works!</p>
+<button type="submit" (click)="this.incrementCounter()">Increment</button>
+<button type="submit" (click)="this.decrementCounter()">Decrement</button>
+<button type="submit" (click)="this.setStaticDefaultCounter()">Reset</button>
 <p>Counter is {{ this.counter() }}</p>
 <p>Counter + 10 (Computed) is {{ this.computedVal() }}</p>
 <div>
@@ -18,12 +18,14 @@
     <p>NO USERS FOUND!</p>
   }
 </div>
+<p>ALIEN LIST:</p>
 <div>
   @for (alien of this.aliens(); track alien._id) {
-    <h3>ID: {{ alien._id }}</h3>
-    <p>ALIEN OBJECT:</p>
-    <p>{{ alien.name }} {{ alien.age }} {{ alien.tech }} {{ alien.sub }}</p>
-  } @empty {
-    <p>NO ALIENS FOUND!</p>
+    <p>{{ alien.name }}</p>
+  }
+</div>
+<div class="grid grid-cols-2 gap-4 p-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  @for (blogPost of this.blogData(); track blogPost.mainImageUrl) {
+    <app-card [data]="blogPost" (click)="navigate($event)"></app-card>
   }
 </div>

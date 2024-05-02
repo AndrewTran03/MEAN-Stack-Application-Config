@@ -1,0 +1,17 @@
+<mat-card class="rounded-xl shadow-xl clickable flex" matRipple>
+  <img class="rounded-t-xl w-full h-36 object-cover" [src]="data.mainImageUrl" />
+  <div class="flex flex-col p-7 bg-white">
+    <div class="flex flex-row">
+      <div class="text-xs uppercase bg-yellow-100 p-1 px-2 text-yellow-700 rounded-2xl">
+        {{ data.category }}
+      </div>
+    </div>
+    <h2 class="text-xl font-bold truncate mt-1">{{ data.title }}</h2>
+    <p class="text-base text-gray-600 mt-1">{{ data.description }}</p>
+    <div class="flex flex-row mt-5 items-center justify-start">
+      <img class="rounded-2xl mr-2" [src]="data.authorImageUrl" />
+      <p class="font-bold text-sm mr-2">{{ data.authorName }}</p>
+      <p class="text-gray-400 text-sm">{{ data.postDate }}</p>
+    </div>
+  </div>
+</mat-card>

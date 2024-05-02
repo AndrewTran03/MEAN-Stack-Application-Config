@@ -19,6 +19,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "useDefineForClassFields": false,
+    "resolveJsonModule": true,
     "lib": ["ESNext", "dom"]
   },
   "angularCompilerOptions": {
