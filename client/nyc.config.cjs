@@ -2,6 +2,7 @@ module.exports = {
   all: true,
   extends: '@istanbuljs/nyc-config-typescript',
   checkCoverage: true,
+  cache: false,
   include: ['src/**/*.ts', 'src/**/*.html'],
   exclude: [
     "./coverage/**",
