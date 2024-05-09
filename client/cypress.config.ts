@@ -11,7 +11,6 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
       registerCodeCoverageTasks(on, config);
-      // on("file:preprocessor", require("@cypress/code-coverage/use-babelrc"));
       return config;
     },
     port: 3002,

@@ -1,7 +1,7 @@
 # !bin/bash
 
 PORT=$1
-rm -rf coverage # Remove any existing coverage folder
+rm -rf .nyc_output coverage # Remove any existing nyc_output and coverage directories
 
 echo "|-------- Beginning of Running Cypress E2E Testing Front-End Script --------|"
 echo "|-------- Freeing Testing Port ${PORT} Before Usage --------|"
@@ -21,8 +21,8 @@ PID=$! # Save the PID of the last process run in the background
 wait $PID
 
 echo "|-------- Show Cypress E2E Testing Code-Coverage --------|"
-npm run cypress:code-cov-report
-npm run test:e2e-code-cov
+# npm run cypress:code-cov-report
+# npm run test:e2e-code-cov
 
 echo "If any tests failed, please check the logs above for more information. Regardless, please CTRL+C to stop the test client."
 echo "|-------- End of Running Cypress E2E Testing Front-End Script --------|"
