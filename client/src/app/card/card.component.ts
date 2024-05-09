@@ -18,6 +18,8 @@ export class CardComponent {
 
   ngOnInit() {}
 
+  ngOnDestroy() {}
+
   navigate(e: MouseEvent) {
     console.log(e);
     this.router.navigateByUrl("/footer");

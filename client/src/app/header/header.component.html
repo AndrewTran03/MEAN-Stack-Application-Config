@@ -1,5 +1,5 @@
 <p class="text-3xl font-bold underline">header works!</p>
-<button type="submit" (click)="this.incrementCounter()">Increment</button>
+<button data-cy-testid="inc-btn" type="submit" (click)="this.incrementCounter()">Increment</button>
 <button type="submit" (click)="this.decrementCounter()">Decrement</button>
 <button type="submit" (click)="this.setStaticDefaultCounter()">Reset</button>
 <p>Counter is {{ this.counter() }}</p>
