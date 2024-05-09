@@ -7,7 +7,7 @@ module.exports = {
   statements: 50,
   functions: 50,
   branches: 50,
-  include: ['src/**/*.ts', 'src/**/*.html'],
+  include: ['src/**/*.ts'],
   exclude: [
     "./coverage/**",
     "cypress/**",
