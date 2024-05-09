@@ -2,7 +2,7 @@
 
 [1.1] Setup Angular Front-End (with TypeScript):
 
-ng new project-frontend
+ng new project-frontend --interactive --minimal
 cd project-frontend
 npm update
 npm install --save-dev --save-exact prettier tslint-config-prettier
