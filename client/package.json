@@ -17,9 +17,12 @@
     "test:e2e-code-cov": "open ./coverage/client/index.html"
   },
   "private": true,
-  "nyc" : {
+  "nyc": {
     "all": true,
-    "include": ["src/**/*.ts", "src/**/*.html"]
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.html"
+    ]
   },
   "dependencies": {
     "@angular/animations": "^17.0.0",
@@ -45,7 +48,6 @@
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@types/cypress__code-coverage": "^3.10.2",
     "@types/d3": "^7.4.3",
-    "@types/jasmine": "~5.1.0",
     "autoprefixer": "^10.4.19",
     "axios": "^1.6.3",
     "cypress": "^13.8.1",
