@@ -4,7 +4,7 @@ import registerCodeCoverageTasks from "@cypress/code-coverage/task";
 export default defineConfig({
   env: {
     codeCoverage: {
-      exclude: "cypress/**/*.*",
+      exclude: "cypress/**/*.*"
     }
   },
   e2e: {
