@@ -1,6 +1,6 @@
 #! /bin/bash
 
-rm -rf coverage # Remove any existing coverage directory
+rm -rf ./tests/coverage # Remove any existing coverage directory
 
 echo "|-------- Beginning of Running Jest Testing Back-End Script --------|"
 echo "|-------- Running Jest Testing Now --------|"
