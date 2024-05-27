@@ -3,27 +3,21 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --extra-webpack-config ./cypress/coverage.webpack.ts",
+    "build": "ng build --configuration production",
+    "production": "ng serve --configuration production",
     "watch": "ng build --watch --configuration development",
     "format": "prettier --write \"**/*.ts*\" \"**/*.js*\" \"**/*.css\" \"**/*.html\"",
     "test": "ng test",
     "deploy": "ng deploy",
     "cypress": "cypress open --browser chrome",
-    "cypress:code-cov-report": "nyc report --reporter=html",
-    "test:component": "cypress run --component --browser chrome --headed --no-exit",
-    "test:e2e": "cypress run --e2e --browser chrome --headed --no-exit",
+    "cypress:code-cov-report": "nyc report --reporter=text-summary",
+    "test:component": "cypress run --component --browser chrome --headless",
+    "test:e2e": "cypress run --e2e --browser chrome --headless",
     "test:e2e-script": "./cypress/run_e2e_cypress_tests.sh 5500",
-    "test:e2e-code-cov": "open ./coverage/client/index.html"
+    "test:e2e-code-cov": "open ./coverage/lcov-report/index.html"
   },
   "private": true,
-  "nyc": {
-    "all": true,
-    "include": [
-      "src/**/*.ts",
-      "src/**/*.html"
-    ]
-  },
   "dependencies": {
     "@angular/animations": "^17.0.0",
     "@angular/cdk": "^17.3.4",
@@ -35,6 +29,7 @@
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
+    "ngx-build-plus": "^17.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
@@ -45,17 +40,19 @@
     "@angular/compiler-cli": "^17.0.0",
     "@cypress/code-coverage": "^3.12.39",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@types/cypress__code-coverage": "^3.10.2",
     "@types/d3": "^7.4.3",
     "autoprefixer": "^10.4.19",
     "axios": "^1.6.3",
+    "babel-plugin-istanbul": "^6.1.1",
     "cypress": "^13.8.1",
     "d3": "^7.8.5",
+    "istanbul-lib-coverage": "^3.2.2",
     "nyc": "^15.1.0",
     "postcss": "^8.4.38",
     "prettier": "3.1.1",
     "socket.io-client": "^4.7.2",
+    "source-map-support": "^0.5.21",
     "tailwindcss": "^3.4.3",
     "tslint-config-prettier": "1.18.0",
     "typescript": "~5.2.2",

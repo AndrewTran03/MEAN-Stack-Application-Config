@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "coverage.webpack.ts"],
   "compilerOptions": {
     "sourceMap": false,
     "types": ["node", "cypress"]
