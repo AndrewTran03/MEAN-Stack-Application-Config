@@ -1,0 +1,4 @@
+References on How to Setup Cypress Code Coverage (Angular + TS):
+
+- https://digitaldrummerj.me/cypress-code-coverage/
+- https://www.npmjs.com/package/nyc
