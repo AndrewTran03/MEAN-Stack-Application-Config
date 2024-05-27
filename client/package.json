@@ -35,8 +35,8 @@
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.0.7",
-    "@angular/cli": "^17.0.7",
+    "@angular/build": "^18.0.1",
+    "@angular/cli": "^18.0.1",
     "@angular/compiler-cli": "^18.0.0",
     "@cypress/code-coverage": "^3.12.39",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
