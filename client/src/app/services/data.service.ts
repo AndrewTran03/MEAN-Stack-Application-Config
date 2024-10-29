@@ -10,7 +10,7 @@ export type Data = {
 export const DEFAULT_DATA: Data = {
   name: "",
   age: 0,
-  createdAt: new Date(),
+  createdAt: new Date()
 };
 
 // export class Data {
@@ -38,7 +38,7 @@ export const DEFAULT_DATA: Data = {
 type HttpResponse<T> = { response: Partial<T> };
 
 export class ExecutionService {
-  constructor(private readonly httpClient: HttpClient) { }
+  constructor(private readonly httpClient: HttpClient) {}
 
   // getAllEntries(data: Data[]): Observable<Data[]> {
   //   return this.httpClient.get<{ response: Data[] }>("/api/data")
@@ -48,15 +48,14 @@ export class ExecutionService {
   // }
 
   getAllEntries(): Observable<Data[]> {
-    return this.httpClient.get<Data[]>("/api/data")
-      .pipe(
-        map(
-          (responses: Data[]) => responses.map((response) => ({ ...response, createdAt: new Date(response.createdAt) }))
-        ),
-        catchError((error: Error) => {
-          console.error('Error fetching data:', error.message);
-          throw error;
-        })
+    return this.httpClient.get<Data[]>("/api/data").pipe(
+      map((responses: Data[]) =>
+        responses.map((response) => ({ ...response, createdAt: new Date(response.createdAt) }))
+      ),
+      catchError((error: Error) => {
+        console.error("Error fetching data:", error.message);
+        throw error;
+      })
     );
 
     // return this.httpClient.get<Data[]>("/api/data")
