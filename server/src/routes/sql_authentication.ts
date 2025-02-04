@@ -1,19 +1,19 @@
 import express from "express";
-import { UserAuth } from "../../assets/types";
-import { openSQLDatabase, closeSQLDatabase } from "../utils/sqlConnection";
-import log from "../utils/logger";
-import { z } from "zod";
+
+import { UserAuth } from "../../assets/types.ts";
+import log from "../utils/logger.ts";
+import { closeSQLDatabase, openSQLDatabase } from "../utils/sqlite_connection.ts";
 
 // Demonstration on how to Use/Interact with a SQL Database (Insert, Delete, Update):
 const router = express.Router();
 
-enum USER_LEVEL {
-  ADMIN = "admin",
-  OWNER = "owner",
-  EMPLOYEE = "employee",
-  CUSTOMER = "customer",
-  OTHER = "reg_user"
-}
+// enum USER_LEVEL {
+//   ADMIN = "admin",
+//   OWNER = "owner",
+//   EMPLOYEE = "employee",
+//   CUSTOMER = "customer",
+//   OTHER = "reg_user"
+// }
 
 // Test Code for Schema Validation
 // const schema = z.object({
@@ -35,8 +35,11 @@ enum USER_LEVEL {
 
 router.get("/api/user", async (_, res) => {
   const rows = await getUsers();
-  if (rows !== null) return res.status(200).json(rows);
-  else return res.status(400).send({ message: "GET - FAILED" });
+  if (rows !== null) {
+    return res.status(200).json(rows);
+  } else {
+    return res.status(400).send({ message: "GET - FAILED" });
+  }
 });
 
 router.post("/api/user", async (req, res) => {
@@ -46,15 +49,21 @@ router.post("/api/user", async (req, res) => {
     user_level: req.body.user_level as string
   };
   const result = await insertUser(insertFields);
-  if (result === true) return res.status(201).send({ message: "INSERT - TRUE" });
-  else return res.status(400).send({ message: "INSERT - FALSE" });
+  if (result === true) {
+    return res.status(201).send({ message: "INSERT - TRUE" });
+  } else {
+    return res.status(400).send({ message: "INSERT - FALSE" });
+  }
 });
 
 router.delete("/api/user", async (req, res) => {
   const userIdToDelete = req.body.id as number;
   const result = await deleteUser(userIdToDelete);
-  if (result === true) return res.status(200).send({ message: "DELETE - TRUE" });
-  else return res.status(400).send({ message: "DELETE - FALSE" });
+  if (result === true) {
+    return res.status(200).send({ message: "DELETE - TRUE" });
+  } else {
+    return res.status(400).send({ message: "DELETE - FALSE" });
+  }
 });
 
 router.put("/api/user", async (req, res) => {
@@ -65,8 +74,11 @@ router.put("/api/user", async (req, res) => {
     user_level: req.body.user_level as string
   };
   const result = await updateUser(userIdToUpdate, updateFields);
-  if (result === true) return res.status(200).send({ message: "UPDATE - TRUE" });
-  else return res.status(400).send({ message: "UPDATE - FALSE" });
+  if (result === true) {
+    return res.status(200).send({ message: "UPDATE - TRUE" });
+  } else {
+    return res.status(400).send({ message: "UPDATE - FALSE" });
+  }
 });
 
 async function getUsers() {

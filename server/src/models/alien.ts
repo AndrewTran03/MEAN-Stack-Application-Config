@@ -1,5 +1,6 @@
-import mongoose from "mongoose";
 import config from "config";
+import mongoose from "mongoose";
+
 import { Alien } from "../../assets/types";
 
 const mongoDBName = config.get<string>("mongoDatabaseName");

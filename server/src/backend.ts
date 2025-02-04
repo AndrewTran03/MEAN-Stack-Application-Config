@@ -1,9 +1,12 @@
-import path from "path";
+/* eslint-disable import/first */
+/* eslint-disable no-console */
 import dotenv from "dotenv";
+import path from "path";
+
 // Checking for a valid 'NODE_ENV' variable configuration
 let ENV_FILE_PATH = "";
 if (process.env["NODE_ENV"] === "development") {
-  ENV_FILE_PATH = "../.env.development";
+  ENV_FILE_PATH = ".env.development";
 } else if (process.env["NODE_ENV"] === "production" || process.env["NODE_ENV"] === "staging") {
   ENV_FILE_PATH = `../../.env.${process.env["NODE_ENV"]}`;
 } else {
@@ -15,20 +18,25 @@ dotenv.config({
   debug: true,
   encoding: "utf8",
   override: true,
-  path: path.resolve(__dirname, ENV_FILE_PATH)
+  path: path.resolve(process.cwd(), ENV_FILE_PATH)
 });
 
-import express, { NextFunction } from "express";
+import "reflect-metadata";
+
 import bodyParser from "body-parser";
 import config from "config";
 import cors from "cors";
-import log from "./utils/logger";
-import router from "./routes";
-import { Server } from "socket.io";
+import express, { NextFunction } from "express";
 import http from "http";
-import { ensureConnectionToMongoDatabase } from "./utils/mongoConnection";
-import { ensureConnectionToSQLDatabase } from "./utils/sqlConnection";
-import { Db } from "mongodb";
+// import { Db } from "mongodb";
+import { Server } from "socket.io";
+import { DataSource } from "typeorm";
+
+import router from "./routes/index";
+import log from "./utils/logger";
+// import { ensureConnectionToMongoDatabase } from "./utils/mongodb_connection";
+import { shutdownConnection, startConnection } from "./utils/mysql_typeorm_connection";
+// import { ensureConnectionToSQLDatabase } from "./utils/sqlite_connection";
 
 // Link: https://medium.com/swlh/typescript-with-mongoose-and-node-express-24073d51d2eed
 const app = express();
@@ -66,18 +74,25 @@ ioSocket.on("connection", (socket) => {
 });
 
 const backendServerPort = config.get<number>("backendServerPort");
+log.info(typeof backendServerPort);
+log.info(`Backend Server Port: ${backendServerPort}`);
 const backendServerUrl = config.get<string>("backendServerUrl");
 
 // let mongoDbRef: Db;
-
+let mysqlConnection: DataSource;
 server.listen(backendServerPort, async () => {
   log.debug(`App started on ${backendServerUrl}`);
-  await ensureConnectionToMongoDatabase();
+  // await ensureConnectionToMongoDatabase();
   // await ensureConnectionToMongoDatabase().then((dbRef) => {
   //     console.assert(!dbRef);
   //     mongoDbRef = dbRef;
   // });
-  await ensureConnectionToSQLDatabase();
+  // await ensureConnectionToSQLDatabase();
+  mysqlConnection = await startConnection();
 });
 
+process.on("SIGINT", () => shutdownConnection(mysqlConnection));
+process.on("SIGTERM", () => shutdownConnection(mysqlConnection));
+
 // export { mongoDbRef };
+export { mysqlConnection };

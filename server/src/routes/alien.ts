@@ -1,7 +1,8 @@
 import express from "express";
-import { AlienModel, alienMongoCollectionName } from "../models/alien";
-import log from "../utils/logger";
-import { Alien, APIErrorResponse } from "../../assets/types";
+
+import { Alien, APIErrorResponse } from "../../assets/types.ts";
+import { AlienModel, alienMongoCollectionName } from "../models/alien.ts";
+import log from "../utils/logger.ts";
 
 const router = express.Router();
 
@@ -12,10 +13,10 @@ router.get("/api/alien", async (_, res) => {
   try {
     const currItems = await AlienModel.find();
 
-    currItems.forEach((item, idx) => {
+    for (const [idx, item] of currItems.entries()) {
       log.info(`Item ${idx}`);
       log.info(JSON.stringify(item, null, 2));
-    });
+    }
 
     log.info(`END OF GET REQUEST #${index} ------------------------`);
     index++;

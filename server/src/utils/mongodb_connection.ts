@@ -1,7 +1,8 @@
-import mongoose from "mongoose";
 import config from "config";
-import log from "./logger";
-import { MongoClient } from "mongodb";
+// import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
+
+import log from "./logger.ts";
 
 async function ensureConnectionToMongoDatabase() {
   const dbUri = config.get<string>("mongoDatabaseUri");
@@ -10,7 +11,8 @@ async function ensureConnectionToMongoDatabase() {
     log.info(dbUri);
     await mongoose.connect(dbUri);
     log.info("Successfully initiated connection to MongoDB");
-  } catch (e) {
+  } catch (e: unknown) {
+    log.error(e);
     log.error("Failed to connect to MongoDB. Exiting now...");
     process.exit(1);
   }

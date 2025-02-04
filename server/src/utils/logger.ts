@@ -1,6 +1,6 @@
-import logger, { Logger } from "pino";
-import dayjs from "dayjs";
 import config from "config";
+import dayjs from "dayjs";
+import logger, { Logger } from "pino";
 
 const level = config.get<string>("logLevel");
 

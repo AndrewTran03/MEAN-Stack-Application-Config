@@ -30,4 +30,4 @@ type Human = {
   isACitizen: boolean;
 };
 
-export { APIErrorResponse, Alien, UserAuth, Human };
+export type { Alien, APIErrorResponse, Human, Prettify, UserAuth };

@@ -6,11 +6,22 @@
     "moduleResolution": "NodeNext",
     "lib": ["ESNext"],
     "outDir": "dist",
+    "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noPropertyAccessFromIndexSignature": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
     "types": ["node", "jest"]
   },
-  "include": ["src/**/*", "./env.d.ts", "config/**/*", "tests/**/*"]
+  "include": ["src/**/*.ts", "./env.d.ts", "config/**/*.ts", "tests/**/*.ts", "src/backend.ts"],
+  "exclude": ["node_modules"],
+  "ts-node": {
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true
+  }
 }
